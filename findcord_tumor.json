@@ -1,30 +1,76 @@
 {
-    "command": "test",
-    "gpu": 2,
-    "log_directory": "sc_model_30mm_2",
+    "command": "train",
+    "gpu": 1,
+    "log_directory": "sc_model_30mm_32",
     "debugging": true,
     "object_detection_params": {
-    	"object_detection_path": null,
-	"safety_factor": [1.0, 1.0, 1.0]
+        "object_detection_path": null,
+        "safety_factor": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "gpu": 1,
+        "log_directory": "sc_model_30mm_32"
     },
     "loader_parameters": {
         "bids_path": "/home/GRAMES.POLYMTL.CA/anlemj/duke/temp/andreanne/tumor_segmentation_masks/results/data",
-        "target_suffix": ["_sc-mask"],
+        "target_suffix": [
+            "_sc-mask"
+        ],
         "roi_params": {
             "suffix": null,
             "slice_filter_roi": null
         },
         "contrast_params": {
-            "training_validation": ["T2w"],
-            "testing": ["T2w"],
-            "balance": {}
+            "training_validation": [
+                "T2w"
+            ],
+            "testing": [
+                "T2w"
+            ],
+            "balance": {},
+            "contrast_lst": [
+                "T2w"
+            ]
         },
         "slice_filter_params": {
             "filter_empty_mask": true,
             "filter_empty_input": true
         },
         "slice_axis": "sagittal",
-        "multichannel": false
+        "multichannel": false,
+        "object_detection_params": {
+            "object_detection_path": null,
+            "safety_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "gpu": 1,
+            "log_directory": "sc_model_30mm_32"
+        },
+        "model_params": {
+            "name": "UNet3D",
+            "dropout_rate": 0.3,
+            "bn_momentum": 0.9,
+            "depth": 4,
+            "applied": true,
+            "length_3D": [
+                512,
+                256,
+                32
+            ],
+            "stride_3D": [
+                512,
+                256,
+                32
+            ],
+            "attention": false,
+            "n_filters": 8,
+            "in_channel": 1,
+            "out_channel": 1
+        }
     },
     "split_dataset": {
         "fname_split": null,
@@ -47,9 +93,8 @@
         "scheduler": {
             "initial_lr": 0.001,
             "lr_scheduler": {
-                "name": "CosineAnnealingLR",
-                "base_lr": 1e-5,
-                "max_lr": 1e-2
+                "base_lr": 1e-05,
+                "max_lr": 0.01
             }
         },
         "balance_samples": false,
@@ -60,15 +105,38 @@
         }
     },
     "default_model": {
-        "name": "Unet",
+        "name": "UNet3D",
         "dropout_rate": 0.3,
         "bn_momentum": 0.9,
-        "depth": 4
+        "depth": 4,
+        "applied": true,
+        "length_3D": [
+            512,
+            256,
+            32
+        ],
+        "stride_3D": [
+            512,
+            256,
+            32
+        ],
+        "attention": false,
+        "n_filters": 8,
+        "in_channel": 1,
+        "out_channel": 1
     },
     "UNet3D": {
         "applied": true,
-        "length_3D": [512, 256, 16],
-        "stride_3D": [512, 256, 16],
+        "length_3D": [
+            512,
+            256,
+            32
+        ],
+        "stride_3D": [
+            512,
+            256,
+            32
+        ],
         "attention": false,
         "n_filters": 8
     },
@@ -81,26 +149,59 @@
         }
     },
     "evaluation_parameters": {
-        "targetSize": {"unit": "vox", "thr": [20, 100]},
-        "removeSmall": {"unit": "vox", "thr": 3},
-        "overlap": {"unit": "vox", "thr": 3}
+        "targetSize": {
+            "unit": "vox",
+            "thr": [
+                20,
+                100
+            ]
+        },
+        "removeSmall": {
+            "unit": "vox",
+            "thr": 3
+        },
+        "overlap": {
+            "unit": "vox",
+            "thr": 3
+        }
     },
     "transformation": {
-        "Resample":
-        {
+        "Resample": {
             "wspace": 1,
             "hspace": 1,
             "dspace": 2,
-	    "preprocessing":true
+            "preprocessing": true
         },
-	"CenterCrop": {"size": [512, 256, 16],
-		"preprocessing":true},
-        "RandomTranslation": {
-            "translate": [0.03, 0.03],
-            "applied_to": ["im", "gt"],
-            "dataset_type": ["training"]
+        "CenterCrop": {
+            "size": [
+                512,
+                256,
+                32
+            ],
+            "preprocessing": true
         },
-      "NumpyToTensor": {},
-      "NormalizeInstance": {"applied_to": ["im"]}
+        "RandomAffine": {
+            "degrees": 5,
+            "scale": [
+                0.1,
+                0.1,
+                0.1
+            ],
+            "translate": [
+                0.03,
+                0.03,
+                0.0
+            ],
+            "applied_to": [
+                "im",
+                "gt"
+            ]
+        },
+        "NumpyToTensor": {},
+        "NormalizeInstance": {
+            "applied_to": [
+                "im"
+            ]
+        }
     }
 }
