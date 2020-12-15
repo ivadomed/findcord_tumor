@@ -148,6 +148,12 @@
             "n_it": 10
         }
     },
+    "postprocessing": {
+	"binarize_prediction": {
+            "thr": 0.5
+        },
+    	"keep_largest": {}
+    }, 
     "evaluation_parameters": {
         "targetSize": {
             "unit": "vox",
