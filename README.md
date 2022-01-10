@@ -4,8 +4,7 @@ This is the repository for the spinal cord detection associated with the tumor s
 
 ## Data
 
-Database (private): `duke:projects/ivadomed/tumor_segmentation_20201005`
-Note: this database will soon be transfered to our internal git-annex server.
+Database (private): `data.neuro.polymtl.ca/datasets/beijing-tumor`
 
 ## Prepare data
 
